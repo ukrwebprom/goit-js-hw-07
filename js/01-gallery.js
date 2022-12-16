@@ -4,7 +4,14 @@ const galleryContainer = document.querySelector(".gallery");
 const gallery = makeGallery(galleryItems);
 galleryContainer.insertAdjacentHTML("afterbegin", gallery);
 galleryContainer.addEventListener("click", onGalleryItemClick);
-const instance = basicLightbox.create(`<img width="1400" height="900" src="">`);
+const instance = basicLightbox.create(
+  `<img width="1400" height="900" src="">`,
+  {
+    onClose: (instance) => {
+      window.removeEventListener("keydown", onKeyPressed);
+    },
+  }
+);
 
 function makeGallery(galleryData) {
   return galleryData
@@ -41,5 +48,4 @@ function onKeyPressed(e) {
     return;
   }
   instance.close();
-  window.removeEventListener("keydown", onKeyPressed);
 }
